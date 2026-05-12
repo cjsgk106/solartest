@@ -1,0 +1,948 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>린소프트 | 영농형 태양광·햇빛소득마을 사업</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Pretendard:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --olive: #4a5d2b;
+    --olive-dark: #2f3d1a;
+    --gold: #d4a017;
+    --gold-light: #f5c842;
+    --earth: #e8dfc8;
+    --earth-light: #f5efe0;
+    --cream: #faf6ec;
+    --ink: #1a1a1a;
+    --gray: #6b6b6b;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Pretendard', -apple-system, sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+  .serif { font-family: 'Gowun Batang', serif; }
+
+  /* 노이즈 텍스처 */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.15'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0.4;
+  }
+
+  /* 네비게이션 */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 1.2rem 2rem;
+    background: rgba(250, 246, 236, 0.92);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(74, 93, 43, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .logo {
+    font-family: 'Gowun Batang', serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--olive-dark);
+    letter-spacing: -0.02em;
+  }
+  .logo span { color: var(--gold); }
+  .nav-links { display: flex; gap: 2rem; align-items: center; }
+  .nav-links a {
+    color: var(--olive-dark);
+    text-decoration: none;
+    font-size: 0.95rem;
+    font-weight: 500;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--gold); }
+  .nav-cta {
+    background: var(--olive-dark);
+    color: var(--cream) !important;
+    padding: 0.6rem 1.2rem;
+    border-radius: 2px;
+    font-weight: 600 !important;
+  }
+  .nav-cta:hover { background: var(--gold) !important; color: var(--olive-dark) !important; }
+
+  /* 히어로 */
+  .hero {
+    min-height: 100vh;
+    padding: 8rem 2rem 4rem;
+    position: relative;
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+    gap: 4rem;
+    align-items: center;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+  .hero-bg {
+    position: absolute;
+    top: 0; right: 0;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(212, 160, 23, 0.08), rgba(74, 93, 43, 0.05));
+    z-index: 0;
+  }
+  .hero-content { position: relative; z-index: 2; }
+  .tag {
+    display: inline-block;
+    padding: 0.4rem 1rem;
+    background: var(--olive-dark);
+    color: var(--gold-light);
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    margin-bottom: 1.5rem;
+    text-transform: uppercase;
+  }
+  .hero h1 {
+    font-family: 'Gowun Batang', serif;
+    font-size: clamp(2.5rem, 5vw, 4.2rem);
+    font-weight: 700;
+    line-height: 1.15;
+    letter-spacing: -0.03em;
+    color: var(--olive-dark);
+    margin-bottom: 1.5rem;
+  }
+  .hero h1 .accent {
+    color: var(--gold);
+    position: relative;
+    display: inline-block;
+  }
+  .hero h1 .accent::after {
+    content: '';
+    position: absolute;
+    bottom: 0.1em;
+    left: 0;
+    right: 0;
+    height: 0.15em;
+    background: var(--gold-light);
+    opacity: 0.4;
+    z-index: -1;
+  }
+  .hero p.lead {
+    font-size: 1.15rem;
+    color: var(--gray);
+    margin-bottom: 2.5rem;
+    max-width: 540px;
+  }
+  .hero-cta { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .btn-primary {
+    background: var(--olive-dark);
+    color: var(--cream);
+    padding: 1rem 2rem;
+    border: none;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.3s;
+    border-radius: 2px;
+  }
+  .btn-primary:hover {
+    background: var(--gold);
+    color: var(--olive-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(212, 160, 23, 0.3);
+  }
+  .btn-secondary {
+    background: transparent;
+    color: var(--olive-dark);
+    padding: 1rem 2rem;
+    border: 2px solid var(--olive-dark);
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.3s;
+    border-radius: 2px;
+  }
+  .btn-secondary:hover { background: var(--olive-dark); color: var(--cream); }
+
+  /* 히어로 비주얼 */
+  .hero-visual {
+    position: relative;
+    z-index: 2;
+    aspect-ratio: 1;
+    max-width: 500px;
+    margin: 0 auto;
+  }
+  .sun {
+    position: absolute;
+    top: 10%;
+    right: 10%;
+    width: 200px;
+    height: 200px;
+    background: radial-gradient(circle, var(--gold-light), var(--gold));
+    border-radius: 50%;
+    box-shadow: 0 0 80px rgba(245, 200, 66, 0.5);
+    animation: pulse 4s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); opacity: 0.9; }
+    50% { transform: scale(1.05); opacity: 1; }
+  }
+  .panels {
+    position: absolute;
+    bottom: 15%;
+    left: 5%;
+    right: 5%;
+    height: 35%;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+    transform: perspective(600px) rotateX(45deg);
+  }
+  .panel {
+    background: linear-gradient(135deg, #1a3a5c, #2d5380);
+    border: 2px solid var(--olive-dark);
+    position: relative;
+  }
+  .panel::before {
+    content: '';
+    position: absolute;
+    inset: 4px;
+    background: repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 8px,
+      rgba(255,255,255,0.15) 8px,
+      rgba(255,255,255,0.15) 10px
+    );
+  }
+  .field {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 25%;
+    background: linear-gradient(to bottom, var(--olive), var(--olive-dark));
+    clip-path: polygon(0 30%, 100% 0, 100% 100%, 0 100%);
+  }
+  .crop {
+    position: absolute;
+    bottom: 0;
+    width: 4px;
+    height: 30px;
+    background: var(--olive-dark);
+  }
+  .crop::before {
+    content: '';
+    position: absolute;
+    top: -5px;
+    left: -3px;
+    width: 10px;
+    height: 10px;
+    background: var(--gold);
+    border-radius: 50%;
+  }
+
+  /* 섹션 공통 */
+  section {
+    padding: 6rem 2rem;
+    position: relative;
+    z-index: 2;
+  }
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .section-tag {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--gold);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+    display: block;
+  }
+  .section-title {
+    font-family: 'Gowun Batang', serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 700;
+    line-height: 1.2;
+    color: var(--olive-dark);
+    margin-bottom: 1rem;
+    letter-spacing: -0.02em;
+  }
+  .section-desc {
+    font-size: 1.1rem;
+    color: var(--gray);
+    margin-bottom: 3rem;
+    max-width: 700px;
+  }
+
+  /* 사업 소개 두 카드 */
+  .programs {
+    background: var(--earth-light);
+    border-top: 1px solid rgba(74, 93, 43, 0.1);
+    border-bottom: 1px solid rgba(74, 93, 43, 0.1);
+  }
+  .program-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+    gap: 2rem;
+    margin-top: 3rem;
+  }
+  .program-card {
+    background: var(--cream);
+    padding: 2.5rem;
+    border: 1px solid rgba(74, 93, 43, 0.15);
+    position: relative;
+    overflow: hidden;
+    transition: all 0.4s;
+  }
+  .program-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--gold);
+    box-shadow: 0 20px 40px rgba(74, 93, 43, 0.1);
+  }
+  .program-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%;
+    height: 4px;
+    background: var(--gold);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s;
+  }
+  .program-card:hover::before { transform: scaleX(1); }
+  .program-num {
+    font-family: 'Gowun Batang', serif;
+    font-size: 3rem;
+    font-weight: 700;
+    color: var(--gold);
+    opacity: 0.3;
+    line-height: 1;
+  }
+  .program-card h3 {
+    font-family: 'Gowun Batang', serif;
+    font-size: 1.6rem;
+    color: var(--olive-dark);
+    margin: 0.5rem 0 1rem;
+  }
+  .program-card p {
+    color: var(--gray);
+    margin-bottom: 1.5rem;
+  }
+  .program-features {
+    list-style: none;
+    padding: 0;
+  }
+  .program-features li {
+    padding: 0.5rem 0;
+    color: var(--ink);
+    font-size: 0.95rem;
+    border-bottom: 1px dashed rgba(74, 93, 43, 0.15);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .program-features li::before {
+    content: '◆';
+    color: var(--gold);
+    font-size: 0.7rem;
+  }
+
+  /* 대상 고객 */
+  .targets {
+    background: var(--cream);
+  }
+  .target-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin-top: 3rem;
+  }
+  .target-card {
+    padding: 2rem;
+    background: var(--olive-dark);
+    color: var(--cream);
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s;
+  }
+  .target-card:nth-child(2) { background: var(--gold); color: var(--olive-dark); }
+  .target-card:nth-child(3) { background: var(--earth); color: var(--olive-dark); }
+  .target-card:hover { transform: translateY(-3px); }
+  .target-icon {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    display: block;
+  }
+  .target-card h4 {
+    font-family: 'Gowun Batang', serif;
+    font-size: 1.3rem;
+    margin-bottom: 0.8rem;
+  }
+  .target-card p {
+    font-size: 0.95rem;
+    opacity: 0.9;
+  }
+
+  /* 수익 시뮬레이션 */
+  .income {
+    background: var(--olive-dark);
+    color: var(--cream);
+    position: relative;
+    overflow: hidden;
+  }
+  .income::before {
+    content: '';
+    position: absolute;
+    top: -50%; right: -10%;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(245, 200, 66, 0.15), transparent 60%);
+    border-radius: 50%;
+  }
+  .income .section-title { color: var(--cream); }
+  .income .section-tag { color: var(--gold-light); }
+  .income .section-desc { color: rgba(250, 246, 236, 0.8); }
+  .income-numbers {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 2rem;
+    margin-top: 3rem;
+    position: relative;
+    z-index: 2;
+  }
+  .number-card {
+    border-left: 3px solid var(--gold);
+    padding-left: 1.5rem;
+  }
+  .number-card .big {
+    font-family: 'Gowun Batang', serif;
+    font-size: 3rem;
+    font-weight: 700;
+    color: var(--gold-light);
+    line-height: 1;
+    margin-bottom: 0.5rem;
+  }
+  .number-card .label {
+    font-size: 0.95rem;
+    opacity: 0.8;
+  }
+  .income-note {
+    margin-top: 3rem;
+    font-size: 0.85rem;
+    opacity: 0.6;
+    font-style: italic;
+  }
+
+  /* 절차 */
+  .process {
+    background: var(--earth-light);
+  }
+  .process-steps {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-top: 3rem;
+    position: relative;
+  }
+  .step {
+    background: var(--cream);
+    padding: 2rem 1.5rem;
+    border: 1px solid rgba(74, 93, 43, 0.15);
+    position: relative;
+  }
+  .step-num {
+    width: 40px;
+    height: 40px;
+    background: var(--gold);
+    color: var(--olive-dark);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-family: 'Gowun Batang', serif;
+    margin-bottom: 1rem;
+  }
+  .step h4 {
+    font-family: 'Gowun Batang', serif;
+    font-size: 1.1rem;
+    color: var(--olive-dark);
+    margin-bottom: 0.5rem;
+  }
+  .step p {
+    font-size: 0.9rem;
+    color: var(--gray);
+  }
+
+  /* FAQ */
+  .faq { background: var(--cream); }
+  .faq-list { margin-top: 3rem; }
+  .faq-item {
+    border-bottom: 1px solid rgba(74, 93, 43, 0.15);
+    padding: 1.5rem 0;
+    cursor: pointer;
+  }
+  .faq-q {
+    font-family: 'Gowun Batang', serif;
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--olive-dark);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .faq-q::after {
+    content: '+';
+    font-size: 1.5rem;
+    color: var(--gold);
+    transition: transform 0.3s;
+  }
+  .faq-item.open .faq-q::after { transform: rotate(45deg); }
+  .faq-a {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s, padding 0.3s;
+    color: var(--gray);
+  }
+  .faq-item.open .faq-a {
+    max-height: 300px;
+    padding-top: 1rem;
+  }
+
+  /* 상담 신청 */
+  .contact {
+    background: linear-gradient(135deg, var(--olive-dark), #1f2812);
+    color: var(--cream);
+    padding: 6rem 2rem;
+  }
+  .contact-wrap {
+    max-width: 700px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  .contact .section-title { color: var(--cream); }
+  .contact .section-tag { color: var(--gold-light); }
+  .contact p.lead {
+    color: rgba(250, 246, 236, 0.85);
+    font-size: 1.1rem;
+    margin-bottom: 3rem;
+  }
+  .form {
+    text-align: left;
+    background: rgba(250, 246, 236, 0.05);
+    border: 1px solid rgba(245, 200, 66, 0.2);
+    padding: 2.5rem;
+    backdrop-filter: blur(10px);
+  }
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+  .form-field { margin-bottom: 1rem; }
+  .form-field label {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-bottom: 0.4rem;
+    color: var(--gold-light);
+    letter-spacing: 0.05em;
+  }
+  .form-field input,
+  .form-field select,
+  .form-field textarea {
+    width: 100%;
+    padding: 0.9rem 1rem;
+    background: rgba(250, 246, 236, 0.08);
+    border: 1px solid rgba(250, 246, 236, 0.2);
+    color: var(--cream);
+    font-family: inherit;
+    font-size: 1rem;
+    transition: border-color 0.2s;
+  }
+  .form-field input:focus,
+  .form-field select:focus,
+  .form-field textarea:focus {
+    outline: none;
+    border-color: var(--gold);
+    background: rgba(250, 246, 236, 0.12);
+  }
+  .form-field textarea { min-height: 100px; resize: vertical; }
+  .form-field select option { background: var(--olive-dark); }
+  .submit-btn {
+    width: 100%;
+    background: var(--gold);
+    color: var(--olive-dark);
+    border: none;
+    padding: 1.2rem;
+    font-size: 1.05rem;
+    font-weight: 700;
+    cursor: pointer;
+    margin-top: 1rem;
+    transition: all 0.3s;
+    letter-spacing: 0.05em;
+  }
+  .submit-btn:hover {
+    background: var(--gold-light);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(245, 200, 66, 0.3);
+  }
+  .privacy {
+    font-size: 0.8rem;
+    color: rgba(250, 246, 236, 0.6);
+    margin-top: 1rem;
+    text-align: center;
+  }
+
+  /* 푸터 */
+  footer {
+    background: #15190d;
+    color: rgba(250, 246, 236, 0.7);
+    padding: 3rem 2rem 2rem;
+    text-align: center;
+    font-size: 0.9rem;
+  }
+  footer .logo { color: var(--cream); margin-bottom: 1rem; display: inline-block; }
+  footer p { margin-bottom: 0.5rem; }
+
+  /* 반응형 */
+  @media (max-width: 900px) {
+    .hero {
+      grid-template-columns: 1fr;
+      padding-top: 7rem;
+      text-align: center;
+    }
+    .hero-bg { display: none; }
+    .hero-visual { max-width: 320px; margin-top: 2rem; }
+    .hero-cta { justify-content: center; }
+    .nav-links { display: none; }
+    .nav-links.show { display: flex; flex-direction: column; position: absolute; top: 100%; left: 0; right: 0; background: var(--cream); padding: 1rem; gap: 1rem; box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
+    .menu-btn { display: block; }
+    .form-row { grid-template-columns: 1fr; }
+    section { padding: 4rem 1.5rem; }
+  }
+  .menu-btn {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    color: var(--olive-dark);
+    cursor: pointer;
+  }
+
+  /* 페이드인 애니메이션 */
+  .fade-up {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s, transform 0.8s;
+  }
+  .fade-up.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">린<span>소프트</span></div>
+  <div class="nav-links" id="navLinks">
+    <a href="#programs">사업소개</a>
+    <a href="#targets">참여대상</a>
+    <a href="#income">예상수익</a>
+    <a href="#process">진행절차</a>
+    <a href="#faq">자주묻는질문</a>
+    <a href="#contact" class="nav-cta">무료 상담신청</a>
+  </div>
+  <button class="menu-btn" onclick="document.getElementById('navLinks').classList.toggle('show')">☰</button>
+</nav>
+
+<!-- 히어로 -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <span class="tag">영농형 태양광 · 햇빛소득마을</span>
+    <h1>땅은 그대로,<br><span class="accent">햇빛</span>으로 새 소득을<br>만듭니다.</h1>
+    <p class="lead">농사도 짓고, 발전 수익도 받는 영농형 태양광. 마을이 함께 만들어 함께 나누는 햇빛소득마을. 까다로운 절차부터 수익 정산까지 전 과정을 함께합니다.</p>
+    <div class="hero-cta">
+      <a href="#contact" class="btn-primary">무료 상담 신청하기 →</a>
+      <a href="#programs" class="btn-secondary">사업 알아보기</a>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="sun"></div>
+    <div class="panels">
+      <div class="panel"></div>
+      <div class="panel"></div>
+      <div class="panel"></div>
+      <div class="panel"></div>
+    </div>
+    <div class="field"></div>
+  </div>
+</section>
+
+<!-- 사업소개 -->
+<section class="programs" id="programs">
+  <div class="container">
+    <span class="section-tag fade-up">우리가 함께 하는 일</span>
+    <h2 class="section-title fade-up">두 가지 길,<br>하나의 새로운 소득</h2>
+    <p class="section-desc fade-up">농지와 마을의 가치를 지키면서 안정적인 추가 수익을 만드는 두 가지 사업 모델을 안내드립니다.</p>
+    
+    <div class="program-grid">
+      <div class="program-card fade-up">
+        <div class="program-num">01</div>
+        <h3>영농형 태양광</h3>
+        <p>농지 위에 태양광 패널을 설치하고, 그 아래에서 농작물을 계속 재배하는 방식입니다. 농업과 발전, 두 가지 수익을 동시에 얻을 수 있습니다.</p>
+        <ul class="program-features">
+          <li>농사 + 발전 수익 이중 소득</li>
+          <li>20년 장기 안정 수익 구조</li>
+          <li>농지 가치 유지 및 활용</li>
+          <li>정부 지원사업 연계 가능</li>
+        </ul>
+      </div>
+      
+      <div class="program-card fade-up">
+        <div class="program-num">02</div>
+        <h3>햇빛소득마을</h3>
+        <p>마을 주민이 함께 출자하거나 참여하여 발전소를 운영하고, 수익을 공동으로 배분하는 주민참여형 재생에너지 사업입니다.</p>
+        <ul class="program-features">
+          <li>주민 공동 출자 및 배당</li>
+          <li>마을 발전기금 조성</li>
+          <li>REC 가중치 우대 혜택</li>
+          <li>주민 수용성 컨설팅 포함</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 참여대상 -->
+<section class="targets" id="targets">
+  <div class="container">
+    <span class="section-tag fade-up">참여 대상</span>
+    <h2 class="section-title fade-up">이런 분들께<br>꼭 맞는 사업입니다</h2>
+    
+    <div class="target-grid">
+      <div class="target-card fade-up">
+        <span class="target-icon">🌾</span>
+        <h4>농지를 가진 농민</h4>
+        <p>현재 농사를 짓고 계시거나 농지를 보유하고 계신 분. 농사를 그만두지 않고도 추가 소득을 만들 수 있습니다.</p>
+      </div>
+      <div class="target-card fade-up">
+        <span class="target-icon">🏡</span>
+        <h4>마을 단위 주민</h4>
+        <p>이장님, 마을 대표, 주민자치회 등 마을 공동 사업을 고민하시는 분. 주민 모두에게 혜택이 돌아갑니다.</p>
+      </div>
+      <div class="target-card fade-up">
+        <span class="target-icon">📐</span>
+        <h4>토지 소유주</h4>
+        <p>유휴 토지, 임야, 잡종지 등을 보유하신 분. 토지 임대만으로도 안정적인 장기 수익이 가능합니다.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 예상수익 -->
+<section class="income" id="income">
+  <div class="container">
+    <span class="section-tag fade-up">예상 수익</span>
+    <h2 class="section-title fade-up">햇빛이 만드는<br>안정적인 추가 소득</h2>
+    <p class="section-desc fade-up">규모와 입지에 따라 달라지지만, 일반적인 1MW 규모 기준 예상 수익 사례입니다.</p>
+    
+    <div class="income-numbers">
+      <div class="number-card fade-up">
+        <div class="big">20년</div>
+        <div class="label">장기 고정 수익 보장 기간</div>
+      </div>
+      <div class="number-card fade-up">
+        <div class="big">2~3억</div>
+        <div class="label">연간 예상 발전 수익 (1MW 기준)</div>
+      </div>
+      <div class="number-card fade-up">
+        <div class="big">+30%</div>
+        <div class="label">영농형 추가 농업소득 가능</div>
+      </div>
+      <div class="number-card fade-up">
+        <div class="big">100%</div>
+        <div class="label">사업 절차 전담 지원</div>
+      </div>
+    </div>
+    
+    <p class="income-note fade-up">* 수익은 토지 조건, 일조량, REC 가격 등에 따라 달라질 수 있으며 정확한 예상 수익은 상담 시 안내드립니다.</p>
+  </div>
+</section>
+
+<!-- 진행절차 -->
+<section class="process" id="process">
+  <div class="container">
+    <span class="section-tag fade-up">진행 절차</span>
+    <h2 class="section-title fade-up">처음부터 끝까지<br>함께 갑니다</h2>
+    <p class="section-desc fade-up">복잡한 인허가, 시공, 수익 정산까지. 처음 신청부터 발전 시작까지 모든 과정을 도와드립니다.</p>
+    
+    <div class="process-steps">
+      <div class="step fade-up">
+        <div class="step-num">1</div>
+        <h4>무료 상담</h4>
+        <p>토지 정보, 희망 사항을 알려주시면 무료로 상담해 드립니다.</p>
+      </div>
+      <div class="step fade-up">
+        <div class="step-num">2</div>
+        <h4>현장 조사</h4>
+        <p>전문가가 직접 방문하여 일조량, 지반 등을 정밀 분석합니다.</p>
+      </div>
+      <div class="step fade-up">
+        <div class="step-num">3</div>
+        <h4>사업 설계</h4>
+        <p>맞춤형 수익 시뮬레이션과 인허가 계획을 제안합니다.</p>
+      </div>
+      <div class="step fade-up">
+        <div class="step-num">4</div>
+        <h4>시공·발전</h4>
+        <p>인허가, 시공, 계통 연계까지 마무리하여 발전을 시작합니다.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq" id="faq">
+  <div class="container">
+    <span class="section-tag fade-up">자주 묻는 질문</span>
+    <h2 class="section-title fade-up">궁금한 점,<br>먼저 답해드립니다</h2>
+    
+    <div class="faq-list">
+      <div class="faq-item fade-up" onclick="this.classList.toggle('open')">
+        <div class="faq-q">초기 비용 없이도 참여할 수 있나요?</div>
+        <div class="faq-a">토지 임대 방식의 경우 초기 투자비 부담 없이 임대료 수익만 받는 구조도 가능합니다. 자기 자본 출자형, 공동 출자형 등 다양한 모델이 있어 상황에 맞게 안내드립니다.</div>
+      </div>
+      <div class="faq-item fade-up" onclick="this.classList.toggle('open')">
+        <div class="faq-q">영농형 태양광은 정말 농사가 가능한가요?</div>
+        <div class="faq-a">네, 가능합니다. 패널 높이와 간격을 조절해 햇빛 투과량을 확보하고, 콩·감자·블루베리·인삼 등 음지 작물 위주로 재배합니다. 정부도 영농형 태양광을 적극 지원하고 있습니다.</div>
+      </div>
+      <div class="faq-item fade-up" onclick="this.classList.toggle('open')">
+        <div class="faq-q">햇빛소득마을은 어떻게 수익이 분배되나요?</div>
+        <div class="faq-a">출자 비율에 따라 배당받는 방식, 마을 공동기금으로 적립하는 방식, 주민 모두에게 균등 배분하는 방식 등 마을 합의에 따라 자유롭게 설계 가능합니다.</div>
+      </div>
+      <div class="faq-item fade-up" onclick="this.classList.toggle('open')">
+        <div class="faq-q">인허가가 어렵다고 들었는데 괜찮을까요?</div>
+        <div class="faq-a">개발행위허가, 농지전용, 전기사업허가 등 복잡한 행정 절차는 전문가가 모두 대행해 드립니다. 신청자께서는 필요한 서류 제공과 상담만 해주시면 됩니다.</div>
+      </div>
+      <div class="faq-item fade-up" onclick="this.classList.toggle('open')">
+        <div class="faq-q">상담료나 수수료가 있나요?</div>
+        <div class="faq-a">상담은 100% 무료입니다. 사업이 실제로 진행될 때 정해진 수수료가 발생하며, 사전에 모든 비용 구조를 투명하게 안내드립니다.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 상담신청 -->
+<section class="contact" id="contact">
+  <div class="contact-wrap">
+    <span class="section-tag fade-up">상담 신청</span>
+    <h2 class="section-title fade-up">햇빛이 만드는 새 소득,<br>지금 알아보세요</h2>
+    <p class="lead fade-up">간단한 정보만 남겨주시면<br>전문 상담사가 빠르게 연락드립니다. 상담은 100% 무료입니다.</p>
+    
+    <form class="form fade-up" onsubmit="submitForm(event)">
+      <div class="form-row">
+        <div class="form-field">
+          <label>성함 *</label>
+          <input type="text" required placeholder="홍길동">
+        </div>
+        <div class="form-field">
+          <label>연락처 *</label>
+          <input type="tel" required placeholder="010-0000-0000">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-field">
+          <label>관심 사업 *</label>
+          <select required>
+            <option value="">선택해 주세요</option>
+            <option>영농형 태양광</option>
+            <option>햇빛소득마을</option>
+            <option>둘 다 알아보고 싶음</option>
+            <option>잘 모르겠음 (상담 필요)</option>
+          </select>
+        </div>
+        <div class="form-field">
+          <label>본인 구분 *</label>
+          <select required>
+            <option value="">선택해 주세요</option>
+            <option>농민 / 농지 소유</option>
+            <option>마을 대표 / 주민</option>
+            <option>토지 소유주</option>
+            <option>기타</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-field">
+        <label>지역 (토지 위치)</label>
+        <input type="text" placeholder="예: 충남 부여군">
+      </div>
+      <div class="form-field">
+        <label>문의 내용</label>
+        <textarea placeholder="궁금하신 점이나 토지에 대한 간단한 정보를 알려주세요."></textarea>
+      </div>
+      <button type="submit" class="submit-btn">무료 상담 신청하기</button>
+      <p class="privacy">제출 시 개인정보 수집·이용에 동의하는 것으로 간주됩니다.</p>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <div class="logo">린<span style="color: var(--gold);">소프트</span></div>
+  <p>영농형 태양광 · 햇빛소득마을 전문 컨설팅</p>
+  <p>대표전화 1588-0000 | 이메일 contact@example.com</p>
+  <p style="margin-top: 1rem; font-size: 0.8rem; opacity: 0.6;">© 2026 린소프트. All rights reserved.</p>
+</footer>
+
+<script>
+  // 페이드인 스크롤
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 80);
+      }
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+  // 폼 제출
+  function submitForm(e) {
+    e.preventDefault();
+    alert('상담 신청이 접수되었습니다. 빠른 시일 내에 연락드리겠습니다.');
+    e.target.reset();
+  }
+
+  // 작물 동적 생성
+  const field = document.querySelector('.field');
+  for (let i = 0; i < 12; i++) {
+    const crop = document.createElement('div');
+    crop.className = 'crop';
+    crop.style.left = (i * 8 + 4) + '%';
+    field.appendChild(crop);
+  }
+</script>
+
+</body>
+</html>
